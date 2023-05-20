@@ -28,9 +28,18 @@ async function run() {
 
     app.get("/all_toy", async (req, res) => {
       const allToy = database.collection("Toys");
-      const cursor = allToy.find();
+      const cursor = allToy.find().limit(20);
       const result = await cursor.toArray();
       res.send(result);
+    });
+
+    app.get("/my_toys/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { sellerEmail: email };
+      const myToys = database.collection("Toys").find(query);
+      const result = await myToys.toArray();
+      res.send(result);
+      console.log(email);
     });
 
     app.post("/add_toy", async (req, res) => {
