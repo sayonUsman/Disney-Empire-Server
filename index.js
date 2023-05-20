@@ -26,6 +26,13 @@ async function run() {
     await client.connect();
     const database = client.db("Disney_Empire");
 
+    app.get("/all_toy", async (req, res) => {
+      const allToy = database.collection("Toys");
+      const cursor = allToy.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     app.post("/add_toy", async (req, res) => {
       const toy = database.collection("Toys");
       const toy_details = req.body;
