@@ -80,6 +80,14 @@ async function run() {
       const result = await toy.insertOne(toy_details);
       res.send(result);
     });
+
+    app.delete("/my_toys/delete/:id", async (req, res) => {
+      const id = req.params.id.toString();
+      const toy = database.collection("Toys");
+      const query = { _id: new ObjectId(id) };
+      const result = await toy.deleteOne(query);
+      res.send(result);
+    });
   } catch {
     await client.close();
   }
