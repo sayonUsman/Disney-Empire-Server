@@ -40,13 +40,21 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/all_toy/:category", async (req, res) => {
+      const category = req.params.category;
+      const allToy = database.collection("TabsToys");
+      const query = { category };
+      const cursor = allToy.find(query).limit(2);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     app.get("/my_toys/:email", async (req, res) => {
       const email = req.params.email;
       const query = { sellerEmail: email };
       const myToys = database.collection("Toys").find(query);
       const result = await myToys.toArray();
       res.send(result);
-      console.log(email);
     });
 
     app.post("/add_toy", async (req, res) => {
