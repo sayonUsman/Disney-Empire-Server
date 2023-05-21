@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
@@ -54,6 +54,23 @@ async function run() {
       const query = { sellerEmail: email };
       const myToys = database.collection("Toys").find(query);
       const result = await myToys.toArray();
+      res.send(result);
+    });
+
+    app.put("/my_toys/updates/:id", async (req, res) => {
+      const id = req.params.id;
+      const toy = database.collection("Toys");
+      const updateDetails = req.body;
+      const query = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedUser = {
+        $set: {
+          price: updateDetails.price,
+          quantity: updateDetails.quantity,
+          description: updateDetails.description,
+        },
+      };
+      const result = await toy.updateOne(query, updatedUser, options);
       res.send(result);
     });
 
