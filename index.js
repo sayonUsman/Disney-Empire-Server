@@ -69,10 +69,6 @@ async function run() {
 }
 run().catch(console.dir);
 
-app.get("/", (req, res) => {
-  res.send("Server is running successfully");
-});
-
 app.listen(port, () => {
   console.log("Server is listening on port " + port);
 });
