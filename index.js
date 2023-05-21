@@ -40,7 +40,7 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/all_toy/:category", async (req, res) => {
+    app.get("/tabs_toys/:category", async (req, res) => {
       const category = req.params.category;
       const allToy = database.collection("TabsToys");
       const query = { category };
